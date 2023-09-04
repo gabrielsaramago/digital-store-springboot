@@ -1,5 +1,6 @@
 package com.gsaramago.digitalstorespring.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -18,7 +19,8 @@ public class Category implements Serializable {
 
     private String name;
 
-    @ManyToMany
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
 
     public Category() {
