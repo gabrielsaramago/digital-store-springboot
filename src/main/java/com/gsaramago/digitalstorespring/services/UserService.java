@@ -2,6 +2,7 @@ package com.gsaramago.digitalstorespring.services;
 
 import com.gsaramago.digitalstorespring.model.User;
 import com.gsaramago.digitalstorespring.repositories.UserRepository;
+import com.gsaramago.digitalstorespring.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class UserService {
 
     public User findById(Long id){
         Optional<User> opt = userRepository.findById(id);
-        return opt.get();
+        return opt.orElseThrow(()-> new ResourceNotFoundException(id));
     }
 
     public User createUser(User user){
