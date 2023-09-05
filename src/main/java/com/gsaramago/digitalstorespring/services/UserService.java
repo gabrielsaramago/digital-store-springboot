@@ -40,8 +40,6 @@ public class UserService {
         else {
             throw new DatabaseException("Not allowed deleting users with orders");
         }
-
-
     }
 
     public User updateUser(Long id, User user){
