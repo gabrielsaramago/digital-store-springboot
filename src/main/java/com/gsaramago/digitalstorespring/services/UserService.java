@@ -2,8 +2,11 @@ package com.gsaramago.digitalstorespring.services;
 
 import com.gsaramago.digitalstorespring.model.User;
 import com.gsaramago.digitalstorespring.repositories.UserRepository;
+import com.gsaramago.digitalstorespring.services.exceptions.DatabaseException;
 import com.gsaramago.digitalstorespring.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +32,15 @@ public class UserService {
     }
 
     public void deleteUser(Long id){
-        userRepository.deleteById(id);
+        User user = findById(id);
+        if(user.getOrders().isEmpty()){
+            userRepository.deleteById(id);
+        }
+        else {
+            throw new DatabaseException("Not allowed deleting users with orders");
+        }
+
+
     }
 
     public User updateUser(Long id, User user){
