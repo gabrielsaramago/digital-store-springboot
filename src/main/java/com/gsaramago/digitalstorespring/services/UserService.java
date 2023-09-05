@@ -3,7 +3,6 @@ package com.gsaramago.digitalstorespring.services;
 import com.gsaramago.digitalstorespring.model.User;
 import com.gsaramago.digitalstorespring.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +29,17 @@ public class UserService {
 
     public void deleteUser(Long id){
         userRepository.deleteById(id);
+    }
+
+    public User updateUser(Long id, User user){
+        User entity = userRepository.getReferenceById(id);
+        updateUserParameters(entity, user);
+        return userRepository.save(entity);
+    }
+
+    private void updateUserParameters(User entity, User user) {
+        entity.setName(user.getName());
+        entity.setPhone(user.getPhone());
     }
 
 }
