@@ -4,6 +4,7 @@ import com.gsaramago.digitalstorespring.model.User;
 import com.gsaramago.digitalstorespring.repositories.UserRepository;
 import com.gsaramago.digitalstorespring.services.exceptions.DatabaseException;
 import com.gsaramago.digitalstorespring.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -44,9 +45,14 @@ public class UserService {
     }
 
     public User updateUser(Long id, User user){
-        User entity = userRepository.getReferenceById(id);
-        updateUserParameters(entity, user);
-        return userRepository.save(entity);
+        try {
+            User entity = userRepository.getReferenceById(id);
+            updateUserParameters(entity, user);
+            return userRepository.save(entity);
+        }
+        catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException(id);
+        }
     }
 
     private void updateUserParameters(User entity, User user) {
