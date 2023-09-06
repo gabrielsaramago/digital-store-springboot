@@ -2,6 +2,8 @@ package com.gsaramago.digitalstorespring.services;
 
 import com.gsaramago.digitalstorespring.model.Product;
 import com.gsaramago.digitalstorespring.repositories.ProductRepository;
+import com.gsaramago.digitalstorespring.services.exceptions.DatabaseException;
+import com.gsaramago.digitalstorespring.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class ProductService {
     }
 
     public Product findById(Long id){
-        return productRepository.findById(id).get();
+        return productRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException(id));
     }
 
     public Product createProduct(Product product){
@@ -26,7 +28,13 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id){
-        productRepository.deleteById(id);
+        Product product = findById(id);
+        if(product.getOrders().isEmpty()){
+            productRepository.deleteById(id);
+        }
+        else {
+            throw new DatabaseException("Not allowed deleting products with orders");
+        }
     }
 
 }
