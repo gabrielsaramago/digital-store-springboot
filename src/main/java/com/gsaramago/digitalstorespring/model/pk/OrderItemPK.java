@@ -2,9 +2,7 @@ package com.gsaramago.digitalstorespring.model.pk;
 
 import com.gsaramago.digitalstorespring.model.Order;
 import com.gsaramago.digitalstorespring.model.Product;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
 import java.util.Objects;
