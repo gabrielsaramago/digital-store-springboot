@@ -1,5 +1,6 @@
 package com.gsaramago.digitalstorespring.resources;
 
+import com.gsaramago.digitalstorespring.model.DTO.UserDto;
 import com.gsaramago.digitalstorespring.model.User;
 import com.gsaramago.digitalstorespring.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,14 @@ public class UserResource {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
-        List<User> list  = userService.findAll();
+    public ResponseEntity<List<UserDto>> findAll(){
+        List<UserDto> list  = userService.findAll();
         return ResponseEntity.ok().body(list);
     }
     @GetMapping(value = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
-        User user = userService.findById(id);
-        return ResponseEntity.ok().body(user);
+    public ResponseEntity<UserDto> findById(@PathVariable Long id){
+        UserDto userDto = userService.findById(id);
+        return ResponseEntity.ok().body(userDto);
     }
 
     @PostMapping
@@ -46,9 +47,9 @@ public class UserResource {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user){
-        user = userService.updateUser(id, user);
-        return ResponseEntity.ok().body(user);
+    public ResponseEntity<UserDto> updateUser(@PathVariable Long id, @RequestBody User user){
+        UserDto userDto = userService.updateUser(id, user);
+        return ResponseEntity.ok().body(userDto);
     }
 
 }
