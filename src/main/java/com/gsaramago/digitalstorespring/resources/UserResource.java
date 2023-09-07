@@ -3,6 +3,7 @@ package com.gsaramago.digitalstorespring.resources;
 import com.gsaramago.digitalstorespring.model.DTO.UserDto;
 import com.gsaramago.digitalstorespring.model.User;
 import com.gsaramago.digitalstorespring.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class UserResource {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody User user){
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody User user){
         UserDto userDto = userService.createUser(user);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()

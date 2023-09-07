@@ -2,6 +2,9 @@ package com.gsaramago.digitalstorespring.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,13 +19,16 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotBlank
+    @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
     private String name;
-
+    @NotBlank
+    @Size(min = 3, max = 250, message = "E-mail invalid.")
     private String email;
 
     private String phone;
 
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$", message = "Password must contain at least 8 characters, one uppercase, one lowercase and one number")
     private String password;
 
     @JsonIgnore
