@@ -39,8 +39,9 @@ public class UserService {
         return modelMapper.map(user, UserDto.class);
     }
 
-    public User createUser(User user){
-        return userRepository.save(user);
+    public UserDto createUser(User user){
+        UserDto userDto = modelMapper.map(userRepository.save(user), UserDto.class);
+        return userDto;
     }
 
     public void deleteUser(Long id){
